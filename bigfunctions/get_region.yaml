@@ -1,0 +1,30 @@
+type: function_sql
+category: transform_string
+author:
+  name: "Credits: Fernando Cavalcante"
+description: |-
+  Retorna a Região do Brasil correspondente a sigla do Estado passado no parametro
+arguments:
+  - name: state
+    type: string
+output:
+  name: region
+  type: string
+examples:
+  - description: "with a valid state"
+    arguments:
+      - "'SP'"
+    output: "SUDESTE"
+  - description: "with incorrect state"
+    arguments:
+      - "'Sao Paulo'"
+    output: "NULL"
+code: |
+  CASE 
+    WHEN state IN ('AC', 'AM', 'RR', 'RO', 'PA', 'AP', 'TO') THEN 'NORTE'
+    WHEN state IN ('MT', 'MS', 'GO', 'DF') THEN 'CENTRO OESTE'
+    WHEN state IN ('RS', 'SC', 'PR') THEN 'SUL'
+    WHEN state IN ('SP', 'MG', 'ES', 'RJ') THEN 'SUDESTE'
+    WHEN state IN ('BA', 'PI', 'MA', 'CE', 'RN', 'PB', 'PE', 'AL', 'SE') THEN 'NORDESTE'
+    ELSE NULL
+  END

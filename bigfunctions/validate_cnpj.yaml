@@ -1,0 +1,37 @@
+type: function_js
+category: transform_string
+author:
+  name: Fernando Cavalcante
+description: |
+  Retorna se um cnpj é valido
+arguments:
+  - name: cnpj
+    type: string
+output:
+  name: is_cnpj_valid
+  type: bool
+code: |
+  function validateCnpj (cnpj) {
+    cnpj = cnpj.replace(/\D/g, '')
+    if (cnpj.length !== 14) {
+      return false
+    }
+    const firstDigitWeights = [5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
+    const secondDigitWeights = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2]
+
+    let sum = 0
+    for (let i = 0; i < 12; i++) {
+      sum += parseInt(cnpj[i]) * firstDigitWeights[i]
+    }
+    let remainder = sum % 11
+    const firstCheckDigit = remainder < 2 ? 0 : 11 - remainder
+
+    sum = 0
+    for (let i = 0; i < 13; i++) {
+      sum += parseInt(cnpj[i]) * secondDigitWeights[i]
+    }
+    remainder = sum % 11
+    const secondCheckDigit = remainder < 2 ? 0 : 11 - remainder
+    return Number(cnpj[12]) === firstCheckDigit && Number(cnpj[13]) === secondCheckDigit
+  }
+  return validateCnpj(cnpj);

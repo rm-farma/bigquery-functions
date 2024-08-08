@@ -1,0 +1,14 @@
+type: function_sql
+category: transform_string
+author:
+  name: "Credits: Fernando Cavalcante"
+description: |-
+  Formata um cnpj, removendo caracteres especiais e completando zeros a esquerda
+arguments:
+  - name: cnpj
+    type: string
+output:
+  name: cnpj
+  type: string
+code: |
+  LPAD(REGEXP_REPLACE(cnpj, '[^0-9]', ''), 14, '0')

@@ -1,0 +1,18 @@
+type: function_sql
+category: transform_string
+author:
+  name: "Credits: Fernando Cavalcante"
+description: |-
+  Formata um endereço no formato endereço, numero e complemento
+arguments:
+  - name: endereco
+    type: string
+  - name: numero
+    type: string
+  - name: complemento
+    type: string
+output:
+  name: endereco_completo
+  type: string
+code: |
+  UPPER(CONCAT(IFNULL(endereco,''),',',IFNULL(numero, 'S/N'),' - ', IFNULL(complemento, '')))
