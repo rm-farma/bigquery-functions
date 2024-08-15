@@ -1,0 +1,14 @@
+type: function_sql
+category: transform_string
+author:
+  name: "Credits: Fernando Cavalcante"
+description: |-
+  Formata um EAN, deixando no minimo 13 posições
+arguments:
+  - name: ean
+    type: string
+output:
+  name: ean
+  type: string
+code: |
+  LPAD(CAST(SAFE_CAST(ean AS INT64) AS String), 13, '0')
