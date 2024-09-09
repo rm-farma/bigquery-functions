@@ -1,0 +1,42 @@
+type: function_js
+category: transform_string
+author:
+  name: Fernando Cavalcante
+description: |
+  Retorna um range de datas a partir da atual no formato String, respeitando os parametros
+arguments:
+  - name: before
+    type: int64
+  - name: after
+    type: int64
+output:
+  name: data_range
+  type: string
+code: |
+  function getDatesAround(before, after) {
+    const currentDate = new Date();
+    function monthFirstDay(data) {
+        return new Date(data.getFullYear(), data.getMonth(), 1);
+    }
+    function fixMonth(data, monthCount) {
+        const newDate = new Date(data);
+        newDate.setMonth(data.getMonth() + monthCount);
+        return monthFirstDay(newDate);
+    }
+
+    let dataBase = monthFirstDay(currentDate);
+    let dates = [];
+  
+    for (let i = before; i >= 1; i--) {
+        dates.push(fixMonth(dataBase, -i).toISOString().split('T')[0]);
+    }
+  
+    dates.push(dataBase.toISOString().split('T')[0]);
+  
+    for (let i = 1; i <= after; i++) {
+        dates.push(fixMonth(dataBase, i).toISOString().split('T')[0]);
+    }
+  
+    return dates.map(data => `'${data}'`).join(', ');
+  }  
+  return getDatesAround(before, after);

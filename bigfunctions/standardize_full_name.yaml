@@ -1,0 +1,17 @@
+type: function_sql
+category: transform_string
+author:
+  name: "Credits: Fernando Cavalcante"
+description: |-
+  Formata um nome Completo, se for invalido retorna null
+arguments:
+  - name: nome
+    type: string
+output:
+  name: nome_completo
+  type: string
+code: |
+  IF(regexp_contains(
+    TRIM(`rm-farma-data-source-prod.utils.replace_special_characters`(nome, '')),"^(([a-zA-Z\u00C0-\u00FF]{2,32})( [a-zA-Z\u00C0-\u00FF.'-]{2,32}){1,12})$"),
+    TRIM(`rm-farma-data-source-prod.utils.replace_special_characters`(nome, '')),
+    NULL) 
